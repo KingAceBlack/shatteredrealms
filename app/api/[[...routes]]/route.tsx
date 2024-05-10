@@ -214,7 +214,7 @@ app.frame('/timegate', (c) => {
             <Button action="/checktime3">Continue</Button>,
         ],
         //player: updatedPlayer,
-        expirationTime: expirationTime.toISOString() // Store expiration time as a string
+        //expirationTime: expirationTime.toISOString() // Store expiration time as a string
     });
 });
 
