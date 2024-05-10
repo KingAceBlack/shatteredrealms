@@ -21,7 +21,7 @@ let player = {
   name: 'player',
   life: 70,
   timegated: 1,
-  timeremaining: 9000,
+  timeremaining: '9000',
   specials: 1,
  
 };
