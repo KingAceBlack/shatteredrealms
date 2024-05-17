@@ -798,8 +798,8 @@ app.frame('/timegate', (c) => {
         intents: [
             <Button action="/checktime3">Continue</Button>,
         ],
-        player: updatedPlayer,
-        expirationTime: expirationTime.toISOString() // Store expiration time as a string
+        //player: updatedPlayer,
+        //expirationTime: expirationTime.toISOString() // Store expiration time as a string
     });
 });
 
