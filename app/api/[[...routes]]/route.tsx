@@ -808,7 +808,7 @@ app.frame('/timegate', (c) => {
 
 
 // this function shows the time the player needs to return back. Say 3:30pm etc
-app.frame('/checktime', (c) => {
+/*app.frame('/checktime', (c) => {
 
   let image;
   let intents;
@@ -860,12 +860,12 @@ app.frame('/checktime', (c) => {
     intents: intents
   });
 
-});
+});*/
 
 
 
 //this function countdowns
-app.frame('/checktime2', (c) => {
+/*app.frame('/checktime2', (c) => {
     let image;
     let intents;
 
@@ -919,7 +919,7 @@ app.frame('/checktime2', (c) => {
         image: image,
         intents: intents
     });
-});
+});*/
 
 
 
