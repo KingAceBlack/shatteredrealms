@@ -109,6 +109,16 @@ app.frame('/showPlayerStatus', (c) => {
     let image;
     let intents = [];
 
+        // Define the images and texts
+    const firstImgSrc = "https://gateway.pinata.cloud/ipfs/QmatyUPpccdoYX9eELzF1ApFPNpkHoH4Dp8NAdCT7rfdjQ";
+    const secondImgSrc = "https://gateway.pinata.cloud/ipfs/QmRLHgSbDzgVFVv5TKMmzhPF9cMDHnQu95wuD4wioLcXo5";
+    const thirdImgSrc = "https://gateway.pinata.cloud/ipfs/QmP8bJAwTzzFMwMdCNBR9e4e6ztUrKeSmS7UTbo86fxpUv";
+    const fourthImgSrc = "https://gateway.pinata.cloud/ipfs/QmcHLDoxYfmQ9vsJZn6PDpdQmVFspQvo5aS9uQH7bTowzh";
+    const firstTextSrc = "https://gateway.pinata.cloud/ipfs/QmQKtH1iSpBsHTJ5KVMjAWdcpkzDiNvDpdN8J3eJDzkrtG";
+    const secondTextSrc = "https://gateway.pinata.cloud/ipfs/QmQX4NC5cLm2sMnQ6QNpHb9HGadhcQ85vPtTy8wV2yk24a";
+    const thirdTextSrc = "https://gateway.pinata.cloud/ipfs/QmW56Jf449vAbmYXxoh1BisUyktfF3k38sYUkHrfaSt4bE";
+    
+
     // Function to create the image div with specific styles
     const createImageDiv = (firstImgSrc, secondImgSrc, thirdImgSrc, fourthImgSrc, firstTextSrc, secondTextSrc, thirdTextSrc) => (
         <div
