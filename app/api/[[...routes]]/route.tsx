@@ -21,39 +21,43 @@ let player = {
   name: 'player',
   life: 70,
   timegated: 1,
-  timeremaining: '9000',
+  timeremaining: "9000",
   specials: 1,
+  tinkererbombactive: 0,
  
 };
 
 
 let enemy1 = {
-  name: 'enemy1',
+  name: '/intro',
   life: 60,
 
+ 
+};
+
+let progressMarker = {
+  previousFrame: '/intro',
+  backButton:1,
+  inventorySlot1: 1,
+  inventorySlot2: 1,
+  inventorySlot3: 1,
+  
  
 };
 
 let expirationTimeRem = new Date(Date.now() + 60000);
 
 app.frame('/', (c) => {
+    player = { ...player, life: 70 };
+    enemy1 = { ...enemy1, life: 60 };
 
-player = { ...player, life: 70 };
-enemy1 = { ...enemy1, life: 60 };
-
-  return c.res({
-
-    
-    image : 'https://gateway.pinata.cloud/ipfs/QmWa1pMBg9xMTxT4MvSGNPqYFvX3Zw3umBE6DYmDtX1fEq',
-  
-    
-    intents: [
-     
-      <Button action="/intro">Continue</Button>,
-     
-    ],
-  }) 
-
+    return c.res({
+        image: 'https://gateway.pinata.cloud/ipfs/QmWa1pMBg9xMTxT4MvSGNPqYFvX3Zw3umBE6DYmDtX1fEq',
+        intents: [
+            //<Button action={enemy1.name}>Continue</Button>, // example of how to pass a variable to the button
+            <Button action="/intro">Continue</Button>,
+        ],
+    });
 });
 
 
@@ -78,7 +82,7 @@ app.frame('/intro', (c) => {
 
 app.frame('/firstchoice', (c) => {
 
-
+  progressMarker = { ...progressMarker, previousFrame: '/firstchoice' };
   return c.res({
 
     
@@ -87,7 +91,7 @@ app.frame('/firstchoice', (c) => {
     
     intents: [
      
-      <Button action="/leftdoor">Left</Button>,<Button action="/rightdoor">Right</Button>,
+      <Button action="/leftdoor">Left</Button>,<Button action="/rightdoor">Right</Button>,<Button action="/showPlayerStatus">Inventory</Button>,
      
     ],
   }) 
@@ -95,9 +99,434 @@ app.frame('/firstchoice', (c) => {
 });
 
 
+
+
+
+
+
+
+app.frame('/showPlayerStatus', (c) => {
+    let image;
+    let intents = [];
+
+    // Function to create the image div with specific styles
+    const createImageDiv = (firstImgSrc, secondImgSrc, thirdImgSrc, fourthImgSrc, firstTextSrc, secondTextSrc, thirdTextSrc) => (
+        <div
+            style={{
+                position: 'relative',  // Set the container to relative positioning
+                height: '100vh',
+                background: 'white',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}
+        >
+            <img
+                src={firstImgSrc}
+                alt="First Image"
+                style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',  // Ensure the image covers the entire container
+                }}
+            />
+            {secondImgSrc && <img
+                src={secondImgSrc}
+                alt="Second Image"
+                style={{
+                    position: 'absolute',  // Set the second image to absolute positioning
+                    width: '100px',
+                    height: '98px',
+                    top: '32%',  // Adjust the position to place it correctly
+                    left: '8%',
+                    transform: 'translate(-50%, -50%)',  // Center the image exactly
+                }}
+            />}
+            {thirdImgSrc && <img
+                src={thirdImgSrc}
+                alt="Third Image"
+                style={{
+                    position: 'absolute',  // Set the third image to absolute positioning
+                    width: '100px',
+                    height: '98px',
+                    top: '60%',  // Position it relative to the second image
+                    left: '8%',
+                    transform: 'translate(-50%, -50%)',  // Center the image exactly
+                }}
+            />}
+            {fourthImgSrc && <img
+                src={fourthImgSrc}
+                alt="Fourth Image"
+                style={{
+                    position: 'absolute',  // Set the fourth image to absolute positioning
+                    width: '100px',
+                    height: '98px',
+                    top: '86%',  // Position it relative to the second image
+                    left: '8%',
+                    transform: 'translate(-50%, -50%)',  // Center the image exactly
+                }}
+            />}
+            {firstTextSrc && <img
+                src={firstTextSrc}
+                alt="First Text"
+                style={{
+                    position: 'absolute',  // Set the first text to absolute positioning
+                    width: '250px',
+                    height: '86px',
+                    top: '32%',  // Position it relative to the second image
+                    left: '25%',
+                    transform: 'translate(-50%, -50%)',  // Center the image exactly
+                }}
+            />}
+            {secondTextSrc && <img
+                src={secondTextSrc}
+                alt="Second Text"
+                style={{
+                    position: 'absolute',  // Set the second text to absolute positioning
+                    width: '250px',
+                    height: '86px',
+                    top: '60%',  // Position it relative to the second image
+                    left: '25%',
+                    transform: 'translate(-50%, -50%)',  // Center the image exactly
+                }}
+            />}
+            {thirdTextSrc && <img
+                src={thirdTextSrc}
+                alt="Third Text"
+                style={{
+                    position: 'absolute',  // Set the third text to absolute positioning
+                    width: '250px',
+                    height: '86px',
+                    top: '86%',  // Position it relative to the second image
+                    left: '25%',
+                    transform: 'translate(-50%, -50%)',  // Center the image exactly
+                }}
+            />}
+            <p style={{ fontSize: '38px', margin: '0', marginTop: '-514px', color: 'green', textAlign: 'right', marginRight: '-892px', fontWeight: 'bold' }}>
+                {player.life}
+            </p>
+
+
+        </div>
+    );
+
+
+    // Check the different combinations of inventory slots
+    if (progressMarker.inventorySlot1 === 1 && progressMarker.inventorySlot2 === 1 && progressMarker.inventorySlot3 === 1) {
+        image = createImageDiv(
+            "https://gateway.pinata.cloud/ipfs/QmatyUPpccdoYX9eELzF1ApFPNpkHoH4Dp8NAdCT7rfdjQ",
+            "https://gateway.pinata.cloud/ipfs/QmRLHgSbDzgVFVv5TKMmzhPF9cMDHnQu95wuD4wioLcXo5",
+            "https://gateway.pinata.cloud/ipfs/QmP8bJAwTzzFMwMdCNBR9e4e6ztUrKeSmS7UTbo86fxpUv",
+            "https://gateway.pinata.cloud/ipfs/QmcHLDoxYfmQ9vsJZn6PDpdQmVFspQvo5aS9uQH7bTowzh",
+            "https://gateway.pinata.cloud/ipfs/QmQKtH1iSpBsHTJ5KVMjAWdcpkzDiNvDpdN8J3eJDzkrtG",
+            "https://gateway.pinata.cloud/ipfs/QmQX4NC5cLm2sMnQ6QNpHb9HGadhcQ85vPtTy8wV2yk24a",
+            "https://gateway.pinata.cloud/ipfs/QmW56Jf449vAbmYXxoh1BisUyktfF3k38sYUkHrfaSt4bE"
+        );
+    } else if (progressMarker.inventorySlot1 === 1 && progressMarker.inventorySlot2 === 0 && progressMarker.inventorySlot3 === 1) {
+        image = createImageDiv(
+            "https://gateway.pinata.cloud/ipfs/QmatyUPpccdoYX9eELzF1ApFPNpkHoH4Dp8NAdCT7rfdjQ",
+            "https://gateway.pinata.cloud/ipfs/QmRLHgSbDzgVFVv5TKMmzhPF9cMDHnQu95wuD4wioLcXo5",
+            "",
+            "https://gateway.pinata.cloud/ipfs/QmcHLDoxYfmQ9vsJZn6PDpdQmVFspQvo5aS9uQH7bTowzh",
+            "https://gateway.pinata.cloud/ipfs/QmQKtH1iSpBsHTJ5KVMjAWdcpkzDiNvDpdN8J3eJDzkrtG",
+            "",
+            "https://gateway.pinata.cloud/ipfs/QmW56Jf449vAbmYXxoh1BisUyktfF3k38sYUkHrfaSt4bE"
+        );
+    } else if (progressMarker.inventorySlot1 === 0 && progressMarker.inventorySlot2 === 1 && progressMarker.inventorySlot3 === 1) {
+        image = createImageDiv(
+            "https://gateway.pinata.cloud/ipfs/QmatyUPpccdoYX9eELzF1ApFPNpkHoH4Dp8NAdCT7rfdjQ",
+            "",
+            "https://gateway.pinata.cloud/ipfs/QmP8bJAwTzzFMwMdCNBR9e4e6ztUrKeSmS7UTbo86fxpUv",
+            "https://gateway.pinata.cloud/ipfs/QmcHLDoxYfmQ9vsJZn6PDpdQmVFspQvo5aS9uQH7bTowzh",
+            "",
+            "https://gateway.pinata.cloud/ipfs/QmQX4NC5cLm2sMnQ6QNpHb9HGadhcQ85vPtTy8wV2yk24a",
+            "https://gateway.pinata.cloud/ipfs/QmW56Jf449vAbmYXxoh1BisUyktfF3k38sYUkHrfaSt4bE"
+        );
+    } else if (progressMarker.inventorySlot1 === 1 && progressMarker.inventorySlot2 === 1 && progressMarker.inventorySlot3 === 0) {
+        image = createImageDiv(
+            "https://gateway.pinata.cloud/ipfs/QmatyUPpccdoYX9eELzF1ApFPNpkHoH4Dp8NAdCT7rfdjQ",
+            "https://gateway.pinata.cloud/ipfs/QmRLHgSbDzgVFVv5TKMmzhPF9cMDHnQu95wuD4wioLcXo5",
+            "https://gateway.pinata.cloud/ipfs/QmP8bJAwTzzFMwMdCNBR9e4e6ztUrKeSmS7UTbo86fxpUv",
+            "",
+            "https://gateway.pinata.cloud/ipfs/QmQKtH1iSpBsHTJ5KVMjAWdcpkzDiNvDpdN8J3eJDzkrtG",
+            "https://gateway.pinata.cloud/ipfs/QmQX4NC5cLm2sMnQ6QNpHb9HGadhcQ85vPtTy8wV2yk24a",
+            ""
+        );
+    } else if (progressMarker.inventorySlot1 === 1 && progressMarker.inventorySlot2 === 0 && progressMarker.inventorySlot3 === 0) {
+        image = createImageDiv(
+            "https://gateway.pinata.cloud/ipfs/QmatyUPpccdoYX9eELzF1ApFPNpkHoH4Dp8NAdCT7rfdjQ",
+            "https://gateway.pinata.cloud/ipfs/QmRLHgSbDzgVFVv5TKMmzhPF9cMDHnQu95wuD4wioLcXo5",
+            "",
+            "",
+            "https://gateway.pinata.cloud/ipfs/QmQKtH1iSpBsHTJ5KVMjAWdcpkzDiNvDpdN8J3eJDzkrtG",
+            "",
+            ""
+        );
+    } else if (progressMarker.inventorySlot1 === 0 && progressMarker.inventorySlot2 === 1 && progressMarker.inventorySlot3 === 0) {
+        image = createImageDiv(
+            "https://gateway.pinata.cloud/ipfs/QmatyUPpccdoYX9eELzF1ApFPNpkHoH4Dp8NAdCT7rfdjQ",
+            "",
+            "https://gateway.pinata.cloud/ipfs/QmP8bJAwTzzFMwMdCNBR9e4e6ztUrKeSmS7UTbo86fxpUv",
+            "",
+            "",
+            "https://gateway.pinata.cloud/ipfs/QmQX4NC5cLm2sMnQ6QNpHb9HGadhcQ85vPtTy8wV2yk24a",
+            ""
+        );
+    } else if (progressMarker.inventorySlot1 === 0 && progressMarker.inventorySlot2 === 0 && progressMarker.inventorySlot3 === 1) {
+        image = createImageDiv(
+            "https://gateway.pinata.cloud/ipfs/QmatyUPpccdoYX9eELzF1ApFPNpkHoH4Dp8NAdCT7rfdjQ",
+            "",
+            "",
+            "https://gateway.pinata.cloud/ipfs/QmcHLDoxYfmQ9vsJZn6PDpdQmVFspQvo5aS9uQH7bTowzh",
+            "",
+            "",
+            "https://gateway.pinata.cloud/ipfs/QmW56Jf449vAbmYXxoh1BisUyktfF3k38sYUkHrfaSt4bE"
+        );
+    } else {
+        // Default case where all inventory slots are 0 or any unexpected combination
+        image = createImageDiv(
+            "https://gateway.pinata.cloud/ipfs/QmatyUPpccdoYX9eELzF1ApFPNpkHoH4Dp8NAdCT7rfdjQ",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        );
+    }
+
+    if (progressMarker.inventorySlot1 === 1) {
+        intents.push(<Button action="/mysticpotionused">Mystic Potion</Button>);
+    }
+    if (progressMarker.inventorySlot2 === 1) {
+        intents.push(<Button action="/medickitused">Medic Kit</Button>);
+    }
+    if (progressMarker.inventorySlot3 === 1) {
+        intents.push(<Button action="/tinkererbombused">Tinkerers Bomb</Button>);
+    }
+    if (progressMarker.backButton === 1) {
+        intents.push(<Button action={progressMarker.previousFrame}>Close</Button>);
+    }
+
+    return c.res({
+        image: image,
+        intents: intents
+    });
+});
+
+
+
+
+app.frame('/mysticpotionused', (c) => {
+   progressMarker = { ...progressMarker, inventorySlot1: 0 };
+   
+   player = { ...player, specials: player.specials += 1 };
+
+  return c.res({
+
+    
+    image : 'https://gateway.pinata.cloud/ipfs/QmUijRizW5XioKjDgAFaGs9sJemYnkkgCoqVXSgtdNyQ8c',
+  
+    
+    intents: [
+     
+      <Button action="/showPlayerStatus">Continue</Button>,
+     
+    ],
+  }) 
+
+});
+
+
+app.frame('/medickitused', (c) => {
+   progressMarker = { ...progressMarker, inventorySlot2: 0 };
+   player.life += 50;
+
+   if (player.life > 100) {
+      player = { ...player, life: 100 };
+    }
+
+
+  return c.res({
+
+    
+    image : 'https://gateway.pinata.cloud/ipfs/QmUijRizW5XioKjDgAFaGs9sJemYnkkgCoqVXSgtdNyQ8c',
+  
+    
+    intents: [
+     
+      <Button action="/showPlayerStatus">Continue</Button>,
+     
+    ],
+  }) 
+
+});
+
+
+
+app.frame('/tinkererbombused', (c) => {
+   progressMarker = { ...progressMarker, inventorySlot3: 0 };
+   player.tinkererbombactive += 1;
+
+  return c.res({
+
+    
+    image : 'https://gateway.pinata.cloud/ipfs/QmUijRizW5XioKjDgAFaGs9sJemYnkkgCoqVXSgtdNyQ8c',
+  
+    
+    intents: [
+     
+      <Button action="/showPlayerStatus">Continue</Button>,
+     
+    ],
+  }) 
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*app.frame('/showPlayerStatus', (c) => {
+    let image;
+    let intents;
+
+    if (progressMarker.inventorySlot1 === 1 && progressMarker.inventorySlot2 === 1 && progressMarker.inventorySlot3 === 1) {
+
+        image = (
+            <div
+                style={{
+                    position: 'relative',  // Set the container to relative positioning
+                    height: '100vh',
+                    background: 'white',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
+            >
+                <img
+                    src="https://gateway.pinata.cloud/ipfs/QmatyUPpccdoYX9eELzF1ApFPNpkHoH4Dp8NAdCT7rfdjQ"
+                    alt="First Image"
+                    style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',  // Ensure the image covers the entire container
+                    }}
+                />
+                <img
+                    src="https://gateway.pinata.cloud/ipfs/QmRLHgSbDzgVFVv5TKMmzhPF9cMDHnQu95wuD4wioLcXo5"
+                    alt="Second Image"
+                    style={{
+                        position: 'absolute',  // Set the second image to absolute positioning
+                        width: '100px',
+                        height: '98px',
+                        top: '36%',  // Adjust the position to place it correctly
+                        left: '10%', // Adjust the position to place it correctly
+                        transform: 'translate(-50%, -50%)',  // Center the image exactly
+                    }}
+                />
+                <img
+                    src="https://gateway.pinata.cloud/ipfs/QmP8bJAwTzzFMwMdCNBR9e4e6ztUrKeSmS7UTbo86fxpUv"
+                    alt="Third Image"
+                    style={{
+                        position: 'absolute',  // Set the third image to absolute positioning
+                        width: '100px',
+                        height: '98px',
+                        top: '60%',  // Position it relative to the second image
+                        left: '10%', // Align it horizontally with the second image
+                        transform: 'translate(-50%, -50%)',  // Center the image exactly
+                    }}
+                />
+                <img
+                    src="https://gateway.pinata.cloud/ipfs/QmcHLDoxYfmQ9vsJZn6PDpdQmVFspQvo5aS9uQH7bTowzh"
+                    alt="Fourth Image"
+                    style={{
+                        position: 'absolute',  // Set the fourth image to absolute positioning
+                        width: '100px',
+                        height: '98px',
+                        top: '84%',  // Position it relative to the second image
+                        left: '10%', // Align it horizontally with the second image
+                        transform: 'translate(-50%, -50%)',  // Center the image exactly
+                    }}
+                />
+                <img
+                    src="https://gateway.pinata.cloud/ipfs/QmQKtH1iSpBsHTJ5KVMjAWdcpkzDiNvDpdN8J3eJDzkrtG"
+                    alt="First Text"
+                    style={{
+                        position: 'absolute',  // Set the first text to absolute positioning
+                        width: '400px',
+                        height: '80px',
+                        top: '36%',  // Position it relative to the second image
+                        left: '35%', // Align it horizontally with the second image
+                        transform: 'translate(-50%, -50%)',  // Center the image exactly
+                    }}
+                />
+                <img
+                    src="https://gateway.pinata.cloud/ipfs/QmQX4NC5cLm2sMnQ6QNpHb9HGadhcQ85vPtTy8wV2yk24a"
+                    alt="Second Text"
+                    style={{
+                        position: 'absolute',  // Set the second text to absolute positioning
+                        width: '400px',
+                        height: '80px',
+                        top: '60%',  // Position it relative to the second image
+                        left: '35%', // Align it horizontally with the second image
+                        transform: 'translate(-50%, -50%)',  // Center the image exactly
+                    }}
+                />
+                <img
+                    src="https://gateway.pinata.cloud/ipfs/QmW56Jf449vAbmYXxoh1BisUyktfF3k38sYUkHrfaSt4bE"
+                    alt="Third Text"
+                    style={{
+                        position: 'absolute',  // Set the third text to absolute positioning
+                        width: '400px',
+                        height: '80px',
+                        top: '84%',  // Position it relative to the second image
+                        left: '35%', // Align it horizontally with the second image
+                        transform: 'translate(-50%, -50%)',  // Center the image exactly
+                    }}
+                />
+            </div>
+        );
+
+        intents = [
+            <Button action="/showPlayerStatus">Mystic Potion</Button>,
+            <Button action="/showPlayerStatus">Medic Kit</Button>,
+            <Button action="/showPlayerStatus">Tinkerers Bomb</Button>
+        ];
+
+    } else {
+        image = null;
+        intents = [];
+    }
+
+    return c.res({
+        image: image,
+        intents: intents
+    });
+});*/
+
+
+
+
+
 app.frame('/leftdoor', (c) => {
 
-
+  progressMarker = { ...progressMarker, previousFrame: '/leftdoor' };
   return c.res({
 
     
@@ -107,6 +536,7 @@ app.frame('/leftdoor', (c) => {
     intents: [
      
       <Button action="/trap1ThreadCarefully">Thread Carefully</Button>,<Button action="/trap1Investigate">Investigate Hieroglyphs</Button>,
+      <Button action="/showPlayerStatus">Inventory</Button>,
      
     ],
   }) 
@@ -116,13 +546,82 @@ app.frame('/leftdoor', (c) => {
 
 
 
+app.frame('/example', (c) => {
+    let image;
+    let intents;
+
+    image = (
+        <div
+            style={{
+                position: 'relative',  // Set the container to relative positioning
+                height: '100vh',
+                background: 'white',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}
+        >
+            <img
+                src="https://gateway.pinata.cloud/ipfs/QmWa1pMBg9xMTxT4MvSGNPqYFvX3Zw3umBE6DYmDtX1fEq"
+                alt="First Image"
+                style={{
+                    width: '1200px',
+                    height: '620px',
+                }}
+            />
+            <img
+                src="https://gateway.pinata.cloud/ipfs/Qmc45eDkgnPmmteB8QTjBfS9Sh8KFfGLXrCxsLqMJBK4SC"
+                alt="Second Image"
+                style={{
+                    position: 'absolute',
+                    width: '150px',
+                    height: '150px',
+                    top: '50%',  // Center it vertically
+                    left: '50%', // Center it horizontally
+                    transform: 'translate(-50%, -50%)',  // Center the image exactly on top of the first image
+                }}
+            />
+            <img
+                src="https://gateway.pinata.cloud/ipfs/Qmc45eDkgnPmmteB8QTjBfS9Sh8KFfGLXrCxsLqMJBK4SC"
+                alt="Third Image"
+                style={{
+                    position: 'absolute',
+                    width: '150px',
+                    height: '150px',
+                    top: '75%',  // Position it differently within the container
+                    left: '75%',
+                    transform: 'translate(-50%, -50%)',
+                }}
+            />
+        </div>
+    );
+
+    intents = [
+        <Button action="/">Continue</Button>
+    ];
+
+    return c.res({
+        image: image,
+        intents: intents
+    });
+});
+
+
+
+
 app.frame('/trap1ThreadCarefully', (c) => {
 
   let image;
   let intents;
+  let randomNum;
 
-
-  const randomNum = Math.floor(Math.random() * 10);
+  if (player.tinkererbombactive > 0) {
+      randomNum = 2;  // Assign value without redeclaring
+      player.tinkererbombactive -= 1;
+  } else {
+      randomNum = Math.floor(Math.random() * 10);  // Assign value without redeclaring
+  }
+    
 
 
 
@@ -132,7 +631,7 @@ app.frame('/trap1ThreadCarefully', (c) => {
     intents = [<Button action="/timegate">Continue</Button>];
     
   } else {
-
+    //victory
     image = 'https://gateway.pinata.cloud/ipfs/QmXJrbQxg95t6V4MQkF4paSV2qTmArgfAgBzdykw2bXE5B';
     intents = [<Button action="/timegate">Proceed</Button>];
 
@@ -154,13 +653,19 @@ app.frame('/trap1Investigate', (c) => {
   let image;
   let intents;
 
+  
+  let randomNum;
 
-  const randomNum = Math.floor(Math.random() * 4);
-
+  if (player.tinkererbombactive > 0) {
+      randomNum = 0;  // Assign value without redeclaring
+      player.tinkererbombactive -= 1;
+  } else {
+      randomNum = Math.floor(Math.random() * 4);  // Assign value without redeclaring
+  }
 
 
   if (randomNum === 0) {
-    
+    // success
     image = 'https://gateway.pinata.cloud/ipfs/QmXJrbQxg95t6V4MQkF4paSV2qTmArgfAgBzdykw2bXE5B';
     intents = [<Button action="/timegate">Proceed</Button>];
     
@@ -213,13 +718,128 @@ app.frame('/timegate', (c) => {
         intents: [
             <Button action="/checktime3">Continue</Button>,
         ],
-        //player: updatedPlayer,
-        //expirationTime: expirationTime.toISOString() // Store expiration time as a string
+        player: updatedPlayer,
+        expirationTime: expirationTime.toISOString() // Store expiration time as a string
     });
 });
 
 
 
+
+
+// this function shows the time the player needs to return back. Say 3:30pm etc
+app.frame('/checktime', (c) => {
+
+  let image;
+  let intents;
+
+  // Calculate hours, minutes, and seconds
+  let hours: number = Math.floor(player.timeremaining / 3600);
+  let minutes: number = Math.floor((player.timeremaining % 3600) / 60);
+  let seconds: number = player.timeremaining % 60;
+
+  // Format the time display as HH:MM:SS
+  let timeDisplay: string = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+  if (player.timegated === 0) {
+      //time has elapsed, continue playing
+      image = 'https://gateway.pinata.cloud/ipfs/Qmc45eDkgnPmmteB8QTjBfS9Sh8KFfGLXrCxsLqMJBK4SC';
+      intents = [<Button action="/timegate">Proceed</Button>];
+      
+    } else {
+      //show remaining time
+    image = (
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',    // Set flex direction to column
+          justifyContent: 'center',  // Vertically center the content
+          alignItems: 'center',       // Horizontally center the content
+          color: 'red',
+          fontSize: 60,
+          fontStyle: 'normal',
+          letterSpacing: '-0.025em',
+          padding: '0 120px',
+          whiteSpace: 'pre-wrap',
+          height: '100vh',            // Set height to 100% of the viewport height
+          background: 'black',        // Set background color to black
+        }}
+      >
+        {`Player should be fully rested by ${player.timeremaining}`}
+      </div>
+    );
+
+
+      intents = [
+        <Button action="/checktime">refreshframe</Button>
+      ];
+    }
+
+  return c.res({
+    image: image,
+    intents: intents
+  });
+
+});
+
+
+
+//this function countdowns
+app.frame('/checktime2', (c) => {
+    let image;
+    let intents;
+
+   
+
+    // Calculate the remaining time by subtracting the current time from the expiration time
+    const timeDifference = expirationTimeRem.getTime() - Date.now();
+
+
+    // Convert the time difference to hours, minutes, and seconds
+    const hoursRemaining = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
+    const minutesRemaining = Math.floor((timeDifference / 1000 / 60) % 60);
+    const secondsRemaining = Math.floor((timeDifference / 1000) % 60);
+
+    // Format the remaining time as a string
+    const expirationTimeString = `${hoursRemaining.toString().padStart(2, '0')}:${minutesRemaining.toString().padStart(2, '0')}:${secondsRemaining.toString().padStart(2, '0')}`;
+
+    if (player.timegated === 0) {
+        // Time has elapsed, continue playing
+        image = 'https://gateway.pinata.cloud/ipfs/Qmc45eDkgnPmmteB8QTjBfS9Sh8KFfGLXrCxsLqMJBK4SC';
+        intents = [<Button action="/timegate">Proceed</Button>];
+    } else {
+        // Show remaining time
+        image = (
+            <div
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    color: 'red',
+                    fontSize: 60,
+                    fontStyle: 'normal',
+                    letterSpacing: '-0.025em',
+                    padding: '0 120px',
+                    whiteSpace: 'pre-wrap',
+                    height: '100vh',
+                    background: 'black',
+                }}
+            >
+                {`Player should be fully rested in ${expirationTimeString}`}
+            </div>
+        );
+
+        intents = [
+            <Button action="/checktime2">Refresh Frame</Button>
+        ];
+    }
+
+    return c.res({
+        image: image,
+        intents: intents
+    });
+});
 
 
 
@@ -292,7 +912,7 @@ app.frame('/checktime3', (c) => {
 
 app.frame('/rightdoor', (c) => {
 
-
+  progressMarker = { ...progressMarker, previousFrame: '/rightdoor' };
   return c.res({
 
     
@@ -301,7 +921,7 @@ app.frame('/rightdoor', (c) => {
     
     intents: [
      
-      <Button action="/flee">Run !</Button>,<Button action="/fight">Fight !</Button>,
+      <Button action="/flee">Run !</Button>,<Button action="/fight">Fight !</Button>,<Button action="/showPlayerStatus">Inventory</Button>,
      
     ],
   }) 
@@ -312,7 +932,7 @@ app.frame('/rightdoor', (c) => {
 
 app.frame('/flee', (c) => {
 
-
+  progressMarker = { ...progressMarker, previousFrame: '/flee' };
   return c.res({
 
     
@@ -321,7 +941,7 @@ app.frame('/flee', (c) => {
     
     intents: [
      
-      <Button action="/firstchoice">Continue</Button>,
+      <Button action="/firstchoice">Continue</Button>,<Button action="/showPlayerStatus">Inventory</Button>,
      
     ],
   }) 
@@ -338,17 +958,17 @@ app.frame('/fight', (c) => {
     let intents;
 
 
-   
+   progressMarker = { ...progressMarker, previousFrame: '/fight' };
 
 
     if (player.specials === 0) {
       
         image = 'https://gateway.pinata.cloud/ipfs/QmYxN6UJJER3U24RrEUQuKCpyWP4c3uo2ikEN3zCHErBM3';
-        intents = [<Button action="/SwiftAttack">Swift Attack</Button>,<Button action="/HeavyAttack">Power Attack</Button>];
+        intents = [<Button action="/SwiftAttack">Swift Attack</Button>,<Button action="/HeavyAttack">Power Attack</Button>,<Button action="/showPlayerStatus">Inventory</Button>];
     } else {
  
         image = 'https://gateway.pinata.cloud/ipfs/QmYxN6UJJER3U24RrEUQuKCpyWP4c3uo2ikEN3zCHErBM3';
-        intents = [<Button action="/SwiftAttack">Swift Attack</Button>,<Button action="/HeavyAttack">Power Attack</Button>,<Button action="/specialAttack">Special Attack</Button>];
+        intents = [<Button action="/SwiftAttack">Swift Attack</Button>,<Button action="/HeavyAttack">Power Attack</Button>,<Button action="/specialAttack">Special Attack</Button>,<Button action="/showPlayerStatus">Inventory</Button>];
 
     }
 
@@ -364,7 +984,7 @@ app.frame('/SwiftAttack', (c) => {
     let image;
     let intents;
     //player.specials -=1
-   
+    progressMarker = { ...progressMarker, previousFrame: '/SwiftAttack' };
     const swiftRandomNum = Math.floor(Math.random() * 8);
 
 
@@ -451,7 +1071,7 @@ app.frame('/HeavyAttack', (c) => {
     let image;
     let intents;
 
-   
+    progressMarker = { ...progressMarker, previousFrame: '/HeavyAttack' };
     const heavyRandomNum = Math.floor(Math.random() * 10);
 
 
@@ -541,7 +1161,7 @@ app.frame('/specialAttack', (c) => {
     player.specials -=1
    
     const specialRandomNum = Math.floor(Math.random() * 8);
-
+    progressMarker = { ...progressMarker, previousFrame: '/specialAttack' };
 
     if (specialRandomNum < 3) {
         //unsuccessful special attack 
@@ -587,7 +1207,7 @@ app.frame('/dodgeResult', (c) => {
     let image;
     let intents;
 
-   
+    progressMarker = { ...progressMarker, previousFrame: '/dodgeResult' };
     const dodgeRandomNum = Math.floor(Math.random() * 10);
 
 
@@ -633,7 +1253,7 @@ app.frame('/counterResult', (c) => {
     if (dodgeRandomNum < 3) {
         // succesful counter
         enemy1.life -= 10
-
+        progressMarker = { ...progressMarker, previousFrame: '/counterResult' };
         if (enemy1.life > 0) {
           //show counter frame
 
