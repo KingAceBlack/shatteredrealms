@@ -30,7 +30,7 @@ let player = {
 
 let enemy1 = {
   name: '/intro',
-  life: 60,
+  life: 70,
 
  
 };
@@ -91,7 +91,7 @@ app.frame('/firstchoice', (c) => {
     
     intents: [
      
-      <Button action="/leftdoor">Left</Button>,<Button action="/rightdoor">Right</Button>,<Button action="/showPlayerStatus">Inventory</Button>,
+      <Button action="/leftdoor">Left</Button>,<Button action="/rightdoor">Right</Button>,<Button action="/showPlayerStatus">Status</Button>,
      
     ],
   }) 
@@ -183,7 +183,7 @@ app.frame('/mysticpotionused', (c) => {
   return c.res({
 
     
-    image : 'https://gateway.pinata.cloud/ipfs/QmUijRizW5XioKjDgAFaGs9sJemYnkkgCoqVXSgtdNyQ8c',
+    image : 'https://gateway.pinata.cloud/ipfs/QmbQYZX8ZSvGYtb5ztiNxNJ18Qu22ndimkMH7wqBRz4mrQ',
   
     
     intents: [
@@ -208,7 +208,7 @@ app.frame('/medickitused', (c) => {
   return c.res({
 
     
-    image : 'https://gateway.pinata.cloud/ipfs/QmUijRizW5XioKjDgAFaGs9sJemYnkkgCoqVXSgtdNyQ8c',
+    image : 'https://gateway.pinata.cloud/ipfs/QmXvqsvx2copXefucXBbkA3Z1yMYcTvobBc9ScbhemEQFJ',
   
     
     intents: [
@@ -229,7 +229,7 @@ app.frame('/tinkererbombused', (c) => {
   return c.res({
 
     
-    image : 'https://gateway.pinata.cloud/ipfs/QmUijRizW5XioKjDgAFaGs9sJemYnkkgCoqVXSgtdNyQ8c',
+    image : 'https://gateway.pinata.cloud/ipfs/QmXvqsvx2copXefucXBbkA3Z1yMYcTvobBc9ScbhemEQFJ',
   
     
     intents: [
@@ -258,7 +258,7 @@ app.frame('/leftdoor', (c) => {
     intents: [
      
       <Button action="/trap1ThreadCarefully">Thread Carefully</Button>,<Button action="/trap1Investigate">Investigate Hieroglyphs</Button>,
-      <Button action="/showPlayerStatus">Inventory</Button>,
+      <Button action="/showPlayerStatus">Status</Button>,
      
     ],
   }) 
@@ -532,7 +532,7 @@ app.frame('/rightdoor', (c) => {
     
     intents: [
      
-      <Button action="/flee">Run !</Button>,<Button action="/fight">Fight !</Button>,<Button action="/showPlayerStatus">Inventory</Button>,
+      <Button action="/flee">Run !</Button>,<Button action="/fight">Fight !</Button>,<Button action="/showPlayerStatus">Status</Button>,
      
     ],
   }) 
@@ -552,7 +552,7 @@ app.frame('/flee', (c) => {
     
     intents: [
      
-      <Button action="/firstchoice">Continue</Button>,<Button action="/showPlayerStatus">Inventory</Button>,
+      <Button action="/firstchoice">Continue</Button>,<Button action="/showPlayerStatus">Status</Button>,
      
     ],
   }) 
@@ -575,11 +575,11 @@ app.frame('/fight', (c) => {
     if (player.specials === 0) {
       
         image = 'https://gateway.pinata.cloud/ipfs/QmYxN6UJJER3U24RrEUQuKCpyWP4c3uo2ikEN3zCHErBM3';
-        intents = [<Button action="/SwiftAttack">Swift Attack</Button>,<Button action="/HeavyAttack">Power Attack</Button>,<Button action="/showPlayerStatus">Inventory</Button>];
+        intents = [<Button action="/SwiftAttack">Swift Attack</Button>,<Button action="/HeavyAttack">Power Attack</Button>,<Button action="/showPlayerStatus">Status</Button>];
     } else {
  
         image = 'https://gateway.pinata.cloud/ipfs/QmYxN6UJJER3U24RrEUQuKCpyWP4c3uo2ikEN3zCHErBM3';
-        intents = [<Button action="/SwiftAttack">Swift Attack</Button>,<Button action="/HeavyAttack">Power Attack</Button>,<Button action="/specialAttack">Special Attack</Button>,<Button action="/showPlayerStatus">Inventory</Button>];
+        intents = [<Button action="/SwiftAttack">SwiftAtk</Button>,<Button action="/HeavyAttack">PowerAtk</Button>,<Button action="/specialAttack">SpecialAtk</Button>,<Button action="/showPlayerStatus">Status</Button>];
 
 
     }
@@ -604,22 +604,22 @@ app.frame('/fight2', (c) => {
         if (fightRandomImage < 1) {
 
           image = 'https://gateway.pinata.cloud/ipfs/QmR8kC4gUEWHxAKwvMJxsz6km43vNyNFaq7rT7edktbGxL';
-          intents = [<Button action="/SwiftAttack">Swift Attack</Button>,<Button action="/HeavyAttack">Power Attack</Button>,<Button action="/showPlayerStatus">Inventory</Button>];
+          intents = [<Button action="/SwiftAttack">Swift Attack</Button>,<Button action="/HeavyAttack">Power Attack</Button>,<Button action="/showPlayerStatus">Status</Button>];
 
         } else if (fightRandomImage === 1) {
           image = 'https://gateway.pinata.cloud/ipfs/Qmeej7fcEzjimVYuvLLaNkqKJw8LE4G4P29THcFKkFfWyj';
-          intents = [<Button action="/SwiftAttack">Swift Attack</Button>,<Button action="/HeavyAttack">Power Attack</Button>,<Button action="/showPlayerStatus">Inventory</Button>];
+          intents = [<Button action="/SwiftAttack">Swift Attack</Button>,<Button action="/HeavyAttack">Power Attack</Button>,<Button action="/showPlayerStatus">Status</Button>];
 
         } else {
           image = 'https://gateway.pinata.cloud/ipfs/QmRVPUNzsD7nMPNNFR3zVsc3x4KhtpeyJxzBfbNZ1zK4d4';
-          intents = [<Button action="/SwiftAttack">Swift Attack</Button>,<Button action="/HeavyAttack">Power Attack</Button>,<Button action="/showPlayerStatus">Inventory</Button>];
+          intents = [<Button action="/SwiftAttack">Swift Attack</Button>,<Button action="/HeavyAttack">Power Attack</Button>,<Button action="/showPlayerStatus">Status</Button>];
 
         }
         
     } else {
  
         image = 'https://gateway.pinata.cloud/ipfs/QmRVPUNzsD7nMPNNFR3zVsc3x4KhtpeyJxzBfbNZ1zK4d4';
-        intents = [<Button action="/SwiftAttack">Swift Attack</Button>,<Button action="/HeavyAttack">Power Attack</Button>,<Button action="/specialAttack">Special Attack</Button>,<Button action="/showPlayerStatus">Inventory</Button>];
+        intents = [<Button action="/SwiftAttack">SwiftAtk</Button>,<Button action="/HeavyAttack">PowerAtk</Button>,<Button action="/specialAttack">SpecialAtk</Button>,<Button action="/showPlayerStatus">Status</Button>];
 
 
     }
@@ -920,7 +920,7 @@ app.frame('/dodgeResult', (c) => {
     let image;
     let intents;
 
-    progressMarker = { ...progressMarker, previousFrame: '/dodgeResult' };
+    //progressMarker = { ...progressMarker, previousFrame: '/dodgeResult' };
     const dodgeRandomNum = Math.floor(Math.random() * 10);
 
 
