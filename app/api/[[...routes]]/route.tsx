@@ -175,231 +175,6 @@ app.frame('/showPlayerStatus', (c) => {
 
 
 
-/*app.frame('/depreciated--showPlayerStatus', (c) => {
-    let image;
-    let intents = [];
-
-        // Define the images and texts
-    const firstImgSrc = "https://gateway.pinata.cloud/ipfs/QmatyUPpccdoYX9eELzF1ApFPNpkHoH4Dp8NAdCT7rfdjQ";
-    const secondImgSrc = "https://gateway.pinata.cloud/ipfs/QmRLHgSbDzgVFVv5TKMmzhPF9cMDHnQu95wuD4wioLcXo5";
-    const thirdImgSrc = "https://gateway.pinata.cloud/ipfs/QmP8bJAwTzzFMwMdCNBR9e4e6ztUrKeSmS7UTbo86fxpUv";
-    const fourthImgSrc = "https://gateway.pinata.cloud/ipfs/QmcHLDoxYfmQ9vsJZn6PDpdQmVFspQvo5aS9uQH7bTowzh";
-    const firstTextSrc = "https://gateway.pinata.cloud/ipfs/QmQKtH1iSpBsHTJ5KVMjAWdcpkzDiNvDpdN8J3eJDzkrtG";
-    const secondTextSrc = "https://gateway.pinata.cloud/ipfs/QmQX4NC5cLm2sMnQ6QNpHb9HGadhcQ85vPtTy8wV2yk24a";
-    const thirdTextSrc = "https://gateway.pinata.cloud/ipfs/QmW56Jf449vAbmYXxoh1BisUyktfF3k38sYUkHrfaSt4bE";
-    
-
-    // Function to create the image div with specific styles
-    const createImageDiv = (firstImgSrc, secondImgSrc, thirdImgSrc, fourthImgSrc, firstTextSrc, secondTextSrc, thirdTextSrc) => (
-        <div
-            style={{
-                position: 'relative',  // Set the container to relative positioning
-                height: '100vh',
-                background: 'white',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-            }}
-        >
-            <img
-                src={firstImgSrc}
-                alt="First Image"
-                style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',  // Ensure the image covers the entire container
-                }}
-            />
-            {secondImgSrc && <img
-                src={secondImgSrc}
-                alt="Second Image"
-                style={{
-                    position: 'absolute',  // Set the second image to absolute positioning
-                    width: '100px',
-                    height: '98px',
-                    top: '32%',  // Adjust the position to place it correctly
-                    left: '8%',
-                    transform: 'translate(-50%, -50%)',  // Center the image exactly
-                }}
-            />}
-            {thirdImgSrc && <img
-                src={thirdImgSrc}
-                alt="Third Image"
-                style={{
-                    position: 'absolute',  // Set the third image to absolute positioning
-                    width: '100px',
-                    height: '98px',
-                    top: '60%',  // Position it relative to the second image
-                    left: '8%',
-                    transform: 'translate(-50%, -50%)',  // Center the image exactly
-                }}
-            />}
-            {fourthImgSrc && <img
-                src={fourthImgSrc}
-                alt="Fourth Image"
-                style={{
-                    position: 'absolute',  // Set the fourth image to absolute positioning
-                    width: '100px',
-                    height: '98px',
-                    top: '86%',  // Position it relative to the second image
-                    left: '8%',
-                    transform: 'translate(-50%, -50%)',  // Center the image exactly
-                }}
-            />}
-            {firstTextSrc && <img
-                src={firstTextSrc}
-                alt="First Text"
-                style={{
-                    position: 'absolute',  // Set the first text to absolute positioning
-                    width: '250px',
-                    height: '86px',
-                    top: '32%',  // Position it relative to the second image
-                    left: '25%',
-                    transform: 'translate(-50%, -50%)',  // Center the image exactly
-                }}
-            />}
-            {secondTextSrc && <img
-                src={secondTextSrc}
-                alt="Second Text"
-                style={{
-                    position: 'absolute',  // Set the second text to absolute positioning
-                    width: '250px',
-                    height: '86px',
-                    top: '60%',  // Position it relative to the second image
-                    left: '25%',
-                    transform: 'translate(-50%, -50%)',  // Center the image exactly
-                }}
-            />}
-            {thirdTextSrc && <img
-                src={thirdTextSrc}
-                alt="Third Text"
-                style={{
-                    position: 'absolute',  // Set the third text to absolute positioning
-                    width: '250px',
-                    height: '86px',
-                    top: '86%',  // Position it relative to the second image
-                    left: '25%',
-                    transform: 'translate(-50%, -50%)',  // Center the image exactly
-                }}
-            />}
-            <p style={{ fontSize: '38px', margin: '0', marginTop: '-514px', color: 'green', textAlign: 'right', marginRight: '-892px', fontWeight: 'bold' }}>
-                {player.life}
-            </p>
-
-
-        </div>
-    );
-
-
-    // Check the different combinations of inventory slots
-    if (progressMarker.inventorySlot1 === 1 && progressMarker.inventorySlot2 === 1 && progressMarker.inventorySlot3 === 1) {
-        image = createImageDiv(
-            "https://gateway.pinata.cloud/ipfs/QmatyUPpccdoYX9eELzF1ApFPNpkHoH4Dp8NAdCT7rfdjQ",
-            "https://gateway.pinata.cloud/ipfs/QmRLHgSbDzgVFVv5TKMmzhPF9cMDHnQu95wuD4wioLcXo5",
-            "https://gateway.pinata.cloud/ipfs/QmP8bJAwTzzFMwMdCNBR9e4e6ztUrKeSmS7UTbo86fxpUv",
-            "https://gateway.pinata.cloud/ipfs/QmcHLDoxYfmQ9vsJZn6PDpdQmVFspQvo5aS9uQH7bTowzh",
-            "https://gateway.pinata.cloud/ipfs/QmQKtH1iSpBsHTJ5KVMjAWdcpkzDiNvDpdN8J3eJDzkrtG",
-            "https://gateway.pinata.cloud/ipfs/QmQX4NC5cLm2sMnQ6QNpHb9HGadhcQ85vPtTy8wV2yk24a",
-            "https://gateway.pinata.cloud/ipfs/QmW56Jf449vAbmYXxoh1BisUyktfF3k38sYUkHrfaSt4bE"
-        );
-    } else if (progressMarker.inventorySlot1 === 1 && progressMarker.inventorySlot2 === 0 && progressMarker.inventorySlot3 === 1) {
-        image = createImageDiv(
-            "https://gateway.pinata.cloud/ipfs/QmatyUPpccdoYX9eELzF1ApFPNpkHoH4Dp8NAdCT7rfdjQ",
-            "https://gateway.pinata.cloud/ipfs/QmRLHgSbDzgVFVv5TKMmzhPF9cMDHnQu95wuD4wioLcXo5",
-            "",
-            "https://gateway.pinata.cloud/ipfs/QmcHLDoxYfmQ9vsJZn6PDpdQmVFspQvo5aS9uQH7bTowzh",
-            "https://gateway.pinata.cloud/ipfs/QmQKtH1iSpBsHTJ5KVMjAWdcpkzDiNvDpdN8J3eJDzkrtG",
-            "",
-            "https://gateway.pinata.cloud/ipfs/QmW56Jf449vAbmYXxoh1BisUyktfF3k38sYUkHrfaSt4bE"
-        );
-    } else if (progressMarker.inventorySlot1 === 0 && progressMarker.inventorySlot2 === 1 && progressMarker.inventorySlot3 === 1) {
-        image = createImageDiv(
-            "https://gateway.pinata.cloud/ipfs/QmatyUPpccdoYX9eELzF1ApFPNpkHoH4Dp8NAdCT7rfdjQ",
-            "",
-            "https://gateway.pinata.cloud/ipfs/QmP8bJAwTzzFMwMdCNBR9e4e6ztUrKeSmS7UTbo86fxpUv",
-            "https://gateway.pinata.cloud/ipfs/QmcHLDoxYfmQ9vsJZn6PDpdQmVFspQvo5aS9uQH7bTowzh",
-            "",
-            "https://gateway.pinata.cloud/ipfs/QmQX4NC5cLm2sMnQ6QNpHb9HGadhcQ85vPtTy8wV2yk24a",
-            "https://gateway.pinata.cloud/ipfs/QmW56Jf449vAbmYXxoh1BisUyktfF3k38sYUkHrfaSt4bE"
-        );
-    } else if (progressMarker.inventorySlot1 === 1 && progressMarker.inventorySlot2 === 1 && progressMarker.inventorySlot3 === 0) {
-        image = createImageDiv(
-            "https://gateway.pinata.cloud/ipfs/QmatyUPpccdoYX9eELzF1ApFPNpkHoH4Dp8NAdCT7rfdjQ",
-            "https://gateway.pinata.cloud/ipfs/QmRLHgSbDzgVFVv5TKMmzhPF9cMDHnQu95wuD4wioLcXo5",
-            "https://gateway.pinata.cloud/ipfs/QmP8bJAwTzzFMwMdCNBR9e4e6ztUrKeSmS7UTbo86fxpUv",
-            "",
-            "https://gateway.pinata.cloud/ipfs/QmQKtH1iSpBsHTJ5KVMjAWdcpkzDiNvDpdN8J3eJDzkrtG",
-            "https://gateway.pinata.cloud/ipfs/QmQX4NC5cLm2sMnQ6QNpHb9HGadhcQ85vPtTy8wV2yk24a",
-            ""
-        );
-    } else if (progressMarker.inventorySlot1 === 1 && progressMarker.inventorySlot2 === 0 && progressMarker.inventorySlot3 === 0) {
-        image = createImageDiv(
-            "https://gateway.pinata.cloud/ipfs/QmatyUPpccdoYX9eELzF1ApFPNpkHoH4Dp8NAdCT7rfdjQ",
-            "https://gateway.pinata.cloud/ipfs/QmRLHgSbDzgVFVv5TKMmzhPF9cMDHnQu95wuD4wioLcXo5",
-            "",
-            "",
-            "https://gateway.pinata.cloud/ipfs/QmQKtH1iSpBsHTJ5KVMjAWdcpkzDiNvDpdN8J3eJDzkrtG",
-            "",
-            ""
-        );
-    } else if (progressMarker.inventorySlot1 === 0 && progressMarker.inventorySlot2 === 1 && progressMarker.inventorySlot3 === 0) {
-        image = createImageDiv(
-            "https://gateway.pinata.cloud/ipfs/QmatyUPpccdoYX9eELzF1ApFPNpkHoH4Dp8NAdCT7rfdjQ",
-            "",
-            "https://gateway.pinata.cloud/ipfs/QmP8bJAwTzzFMwMdCNBR9e4e6ztUrKeSmS7UTbo86fxpUv",
-            "",
-            "",
-            "https://gateway.pinata.cloud/ipfs/QmQX4NC5cLm2sMnQ6QNpHb9HGadhcQ85vPtTy8wV2yk24a",
-            ""
-        );
-    } else if (progressMarker.inventorySlot1 === 0 && progressMarker.inventorySlot2 === 0 && progressMarker.inventorySlot3 === 1) {
-        image = createImageDiv(
-            "https://gateway.pinata.cloud/ipfs/QmatyUPpccdoYX9eELzF1ApFPNpkHoH4Dp8NAdCT7rfdjQ",
-            "",
-            "",
-            "https://gateway.pinata.cloud/ipfs/QmcHLDoxYfmQ9vsJZn6PDpdQmVFspQvo5aS9uQH7bTowzh",
-            "",
-            "",
-            "https://gateway.pinata.cloud/ipfs/QmW56Jf449vAbmYXxoh1BisUyktfF3k38sYUkHrfaSt4bE"
-        );
-    } else {
-        // Default case where all inventory slots are 0 or any unexpected combination
-        image = createImageDiv(
-            "https://gateway.pinata.cloud/ipfs/QmatyUPpccdoYX9eELzF1ApFPNpkHoH4Dp8NAdCT7rfdjQ",
-            "",
-            "",
-            "",
-            "",
-            "",
-            ""
-        );
-    }
-
-    if (progressMarker.inventorySlot1 === 1) {
-        intents.push(<Button action="/mysticpotionused">Mystic Potion</Button>);
-    }
-    if (progressMarker.inventorySlot2 === 1) {
-        intents.push(<Button action="/medickitused">Medic Kit</Button>);
-    }
-    if (progressMarker.inventorySlot3 === 1) {
-        intents.push(<Button action="/tinkererbombused">Tinkerers Bomb</Button>);
-    }
-    if (progressMarker.backButton === 1) {
-        intents.push(<Button action={progressMarker.previousFrame}>Close</Button>);
-    }
-
-    return c.res({
-        image: image,
-        intents: intents
-    });
-});*/
-
-
-
-
 app.frame('/mysticpotionused', (c) => {
    progressMarker = { ...progressMarker, inventorySlot1: 0 };
    
@@ -466,139 +241,6 @@ app.frame('/tinkererbombused', (c) => {
 
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*app.frame('/showPlayerStatus', (c) => {
-    let image;
-    let intents;
-
-    if (progressMarker.inventorySlot1 === 1 && progressMarker.inventorySlot2 === 1 && progressMarker.inventorySlot3 === 1) {
-
-        image = (
-            <div
-                style={{
-                    position: 'relative',  // Set the container to relative positioning
-                    height: '100vh',
-                    background: 'white',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}
-            >
-                <img
-                    src="https://gateway.pinata.cloud/ipfs/QmatyUPpccdoYX9eELzF1ApFPNpkHoH4Dp8NAdCT7rfdjQ"
-                    alt="First Image"
-                    style={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',  // Ensure the image covers the entire container
-                    }}
-                />
-                <img
-                    src="https://gateway.pinata.cloud/ipfs/QmRLHgSbDzgVFVv5TKMmzhPF9cMDHnQu95wuD4wioLcXo5"
-                    alt="Second Image"
-                    style={{
-                        position: 'absolute',  // Set the second image to absolute positioning
-                        width: '100px',
-                        height: '98px',
-                        top: '36%',  // Adjust the position to place it correctly
-                        left: '10%', // Adjust the position to place it correctly
-                        transform: 'translate(-50%, -50%)',  // Center the image exactly
-                    }}
-                />
-                <img
-                    src="https://gateway.pinata.cloud/ipfs/QmP8bJAwTzzFMwMdCNBR9e4e6ztUrKeSmS7UTbo86fxpUv"
-                    alt="Third Image"
-                    style={{
-                        position: 'absolute',  // Set the third image to absolute positioning
-                        width: '100px',
-                        height: '98px',
-                        top: '60%',  // Position it relative to the second image
-                        left: '10%', // Align it horizontally with the second image
-                        transform: 'translate(-50%, -50%)',  // Center the image exactly
-                    }}
-                />
-                <img
-                    src="https://gateway.pinata.cloud/ipfs/QmcHLDoxYfmQ9vsJZn6PDpdQmVFspQvo5aS9uQH7bTowzh"
-                    alt="Fourth Image"
-                    style={{
-                        position: 'absolute',  // Set the fourth image to absolute positioning
-                        width: '100px',
-                        height: '98px',
-                        top: '84%',  // Position it relative to the second image
-                        left: '10%', // Align it horizontally with the second image
-                        transform: 'translate(-50%, -50%)',  // Center the image exactly
-                    }}
-                />
-                <img
-                    src="https://gateway.pinata.cloud/ipfs/QmQKtH1iSpBsHTJ5KVMjAWdcpkzDiNvDpdN8J3eJDzkrtG"
-                    alt="First Text"
-                    style={{
-                        position: 'absolute',  // Set the first text to absolute positioning
-                        width: '400px',
-                        height: '80px',
-                        top: '36%',  // Position it relative to the second image
-                        left: '35%', // Align it horizontally with the second image
-                        transform: 'translate(-50%, -50%)',  // Center the image exactly
-                    }}
-                />
-                <img
-                    src="https://gateway.pinata.cloud/ipfs/QmQX4NC5cLm2sMnQ6QNpHb9HGadhcQ85vPtTy8wV2yk24a"
-                    alt="Second Text"
-                    style={{
-                        position: 'absolute',  // Set the second text to absolute positioning
-                        width: '400px',
-                        height: '80px',
-                        top: '60%',  // Position it relative to the second image
-                        left: '35%', // Align it horizontally with the second image
-                        transform: 'translate(-50%, -50%)',  // Center the image exactly
-                    }}
-                />
-                <img
-                    src="https://gateway.pinata.cloud/ipfs/QmW56Jf449vAbmYXxoh1BisUyktfF3k38sYUkHrfaSt4bE"
-                    alt="Third Text"
-                    style={{
-                        position: 'absolute',  // Set the third text to absolute positioning
-                        width: '400px',
-                        height: '80px',
-                        top: '84%',  // Position it relative to the second image
-                        left: '35%', // Align it horizontally with the second image
-                        transform: 'translate(-50%, -50%)',  // Center the image exactly
-                    }}
-                />
-            </div>
-        );
-
-        intents = [
-            <Button action="/showPlayerStatus">Mystic Potion</Button>,
-            <Button action="/showPlayerStatus">Medic Kit</Button>,
-            <Button action="/showPlayerStatus">Tinkerers Bomb</Button>
-        ];
-
-    } else {
-        image = null;
-        intents = [];
-    }
-
-    return c.res({
-        image: image,
-        intents: intents
-    });
-});*/
 
 
 
@@ -685,6 +327,7 @@ app.frame('/example', (c) => {
         intents: intents
     });
 });
+
 
 
 
@@ -807,119 +450,7 @@ app.frame('/timegate', (c) => {
 
 
 
-// this function shows the time the player needs to return back. Say 3:30pm etc
-/*app.frame('/checktime', (c) => {
 
-  let image;
-  let intents;
-
-  // Calculate hours, minutes, and seconds
-  let hours: number = Math.floor(player.timeremaining / 3600);
-  let minutes: number = Math.floor((player.timeremaining % 3600) / 60);
-  let seconds: number = player.timeremaining % 60;
-
-  // Format the time display as HH:MM:SS
-  let timeDisplay: string = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-
-  if (player.timegated === 0) {
-      //time has elapsed, continue playing
-      image = 'https://gateway.pinata.cloud/ipfs/Qmc45eDkgnPmmteB8QTjBfS9Sh8KFfGLXrCxsLqMJBK4SC';
-      intents = [<Button action="/timegate">Proceed</Button>];
-      
-    } else {
-      //show remaining time
-    image = (
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',    // Set flex direction to column
-          justifyContent: 'center',  // Vertically center the content
-          alignItems: 'center',       // Horizontally center the content
-          color: 'red',
-          fontSize: 60,
-          fontStyle: 'normal',
-          letterSpacing: '-0.025em',
-          padding: '0 120px',
-          whiteSpace: 'pre-wrap',
-          height: '100vh',            // Set height to 100% of the viewport height
-          background: 'black',        // Set background color to black
-        }}
-      >
-        {`Player should be fully rested by ${player.timeremaining}`}
-      </div>
-    );
-
-
-      intents = [
-        <Button action="/checktime">refreshframe</Button>
-      ];
-    }
-
-  return c.res({
-    image: image,
-    intents: intents
-  });
-
-});*/
-
-
-
-//this function countdowns
-/*app.frame('/checktime2', (c) => {
-    let image;
-    let intents;
-
-   
-
-    // Calculate the remaining time by subtracting the current time from the expiration time
-    const timeDifference = expirationTimeRem.getTime() - Date.now();
-
-
-    // Convert the time difference to hours, minutes, and seconds
-    const hoursRemaining = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
-    const minutesRemaining = Math.floor((timeDifference / 1000 / 60) % 60);
-    const secondsRemaining = Math.floor((timeDifference / 1000) % 60);
-
-    // Format the remaining time as a string
-    const expirationTimeString = `${hoursRemaining.toString().padStart(2, '0')}:${minutesRemaining.toString().padStart(2, '0')}:${secondsRemaining.toString().padStart(2, '0')}`;
-
-    if (player.timegated === 0) {
-        // Time has elapsed, continue playing
-        image = 'https://gateway.pinata.cloud/ipfs/Qmc45eDkgnPmmteB8QTjBfS9Sh8KFfGLXrCxsLqMJBK4SC';
-        intents = [<Button action="/timegate">Proceed</Button>];
-    } else {
-        // Show remaining time
-        image = (
-            <div
-                style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    color: 'red',
-                    fontSize: 60,
-                    fontStyle: 'normal',
-                    letterSpacing: '-0.025em',
-                    padding: '0 120px',
-                    whiteSpace: 'pre-wrap',
-                    height: '100vh',
-                    background: 'black',
-                }}
-            >
-                {`Player should be fully rested in ${expirationTimeString}`}
-            </div>
-        );
-
-        intents = [
-            <Button action="/checktime2">Refresh Frame</Button>
-        ];
-    }
-
-    return c.res({
-        image: image,
-        intents: intents
-    });
-});*/
 
 
 
@@ -1050,6 +581,47 @@ app.frame('/fight', (c) => {
         image = 'https://gateway.pinata.cloud/ipfs/QmYxN6UJJER3U24RrEUQuKCpyWP4c3uo2ikEN3zCHErBM3';
         intents = [<Button action="/SwiftAttack">Swift Attack</Button>,<Button action="/HeavyAttack">Power Attack</Button>,<Button action="/specialAttack">Special Attack</Button>,<Button action="/showPlayerStatus">Inventory</Button>];
 
+
+    }
+
+    return c.res({
+        image: image,
+        intents: intents
+    });
+});
+
+app.frame('/fight2', (c) => {
+    let image;
+    let intents;
+    const fightRandomImage = Math.floor(Math.random() * 3);
+
+   progressMarker = { ...progressMarker, previousFrame: '/fight2' };
+
+
+    if (player.specials === 0) {
+      //player has no special attack
+
+        if (fightRandomImage < 1) {
+
+          image = 'https://gateway.pinata.cloud/ipfs/QmR8kC4gUEWHxAKwvMJxsz6km43vNyNFaq7rT7edktbGxL';
+          intents = [<Button action="/SwiftAttack">Swift Attack</Button>,<Button action="/HeavyAttack">Power Attack</Button>,<Button action="/showPlayerStatus">Inventory</Button>];
+
+        } else if (fightRandomImage === 1) {
+          image = 'https://gateway.pinata.cloud/ipfs/Qmeej7fcEzjimVYuvLLaNkqKJw8LE4G4P29THcFKkFfWyj';
+          intents = [<Button action="/SwiftAttack">Swift Attack</Button>,<Button action="/HeavyAttack">Power Attack</Button>,<Button action="/showPlayerStatus">Inventory</Button>];
+
+        } else {
+          image = 'https://gateway.pinata.cloud/ipfs/QmRVPUNzsD7nMPNNFR3zVsc3x4KhtpeyJxzBfbNZ1zK4d4';
+          intents = [<Button action="/SwiftAttack">Swift Attack</Button>,<Button action="/HeavyAttack">Power Attack</Button>,<Button action="/showPlayerStatus">Inventory</Button>];
+
+        }
+        
+    } else {
+ 
+        image = 'https://gateway.pinata.cloud/ipfs/QmRVPUNzsD7nMPNNFR3zVsc3x4KhtpeyJxzBfbNZ1zK4d4';
+        intents = [<Button action="/SwiftAttack">Swift Attack</Button>,<Button action="/HeavyAttack">Power Attack</Button>,<Button action="/specialAttack">Special Attack</Button>,<Button action="/showPlayerStatus">Inventory</Button>];
+
+
     }
 
     return c.res({
@@ -1063,9 +635,9 @@ app.frame('/fight', (c) => {
 app.frame('/SwiftAttack', (c) => {
     let image;
     let intents;
-    //player.specials -=1
-    progressMarker = { ...progressMarker, previousFrame: '/SwiftAttack' };
+
     const swiftRandomNum = Math.floor(Math.random() * 8);
+    const swiftRandomMiss = Math.floor(Math.random() * 3);
 
 
     if (swiftRandomNum < 3) {
@@ -1091,8 +663,16 @@ app.frame('/SwiftAttack', (c) => {
 
     } else if (swiftRandomNum === 3) {
       // attack missed
-      image = 'https://gateway.pinata.cloud/ipfs/QmbZ964voi8yRCcyzaBWgVqxKYNrYUbzLCyoPPSWzaw2J7';
-      intents = [<Button action="/dodgeResult">Dodge</Button>,<Button action="/counterResult">Counter</Button>];
+      if (swiftRandomMiss < 1) {
+        image = 'https://gateway.pinata.cloud/ipfs/QmbZ964voi8yRCcyzaBWgVqxKYNrYUbzLCyoPPSWzaw2J7';
+        intents = [<Button action="/dodgeResult">Dodge</Button>,<Button action="/counterResult">Counter</Button>];
+
+      } else {
+
+        image = 'https://gateway.pinata.cloud/ipfs/QmV5oZgViyiw6cihQtwP2ZFyD8WJRqFkjL1TgsYxN1gQdp';
+        intents = [<Button action="/dodgeResult">Dodge</Button>,<Button action="/counterResult">Counter</Button>];
+
+      }
 
 
 
@@ -1123,8 +703,23 @@ app.frame('/SwiftAttack', (c) => {
         if (enemy1.life > 0) {
           //enemy is still alive
 
-          image = 'https://gateway.pinata.cloud/ipfs/QmViDE4Th6MB5REsZA144cKgJWmhAMfkAehh89UHEiVVog';
-          intents = [<Button action="/dodgeResult">Dodge</Button>,<Button action="/counterResult">Counter</Button>];
+            if (swiftRandomMiss < 1) {
+              image = 'https://gateway.pinata.cloud/ipfs/QmViDE4Th6MB5REsZA144cKgJWmhAMfkAehh89UHEiVVog';
+              intents = [<Button action="/dodgeResult">Dodge</Button>,<Button action="/counterResult">Counter</Button>];
+
+            }else if (swiftRandomMiss === 1) {
+
+              image = 'https://gateway.pinata.cloud/ipfs/QmQZ8zgwBEZCyBWvbXo7JUWPzLu5wGPzU4f9kauxgmjAje';
+              intents = [<Button action="/dodgeResult">Dodge</Button>,<Button action="/counterResult">Counter</Button>];
+
+            } else {
+
+              image = 'https://gateway.pinata.cloud/ipfs/QmcTZnXczFqYX14rdrfnj3aZ54ULBB9sRUkopsQe4kSeNB';
+              intents = [<Button action="/dodgeResult">Dodge</Button>,<Button action="/counterResult">Counter</Button>];
+
+            }
+
+          
 
         } else {
           // enemy is dead
@@ -1151,8 +746,9 @@ app.frame('/HeavyAttack', (c) => {
     let image;
     let intents;
 
-    progressMarker = { ...progressMarker, previousFrame: '/HeavyAttack' };
+
     const heavyRandomNum = Math.floor(Math.random() * 10);
+    const heavyRandomMiss = Math.floor(Math.random() * 2);
 
 
     if (heavyRandomNum < 4) {
@@ -1177,14 +773,31 @@ app.frame('/HeavyAttack', (c) => {
 
 
     } else if (heavyRandomNum === 4) {
-      // attack missed
-      image = 'https://gateway.pinata.cloud/ipfs/QmbZ964voi8yRCcyzaBWgVqxKYNrYUbzLCyoPPSWzaw2J7';
-      intents = [<Button action="/dodgeResult">Dodge</Button>,<Button action="/counterResult">Counter</Button>];
+        // attack missed
+        // attack missed
+        if (heavyRandomMiss < 1) {
+          image = 'https://gateway.pinata.cloud/ipfs/QmbZ964voi8yRCcyzaBWgVqxKYNrYUbzLCyoPPSWzaw2J7';
+          intents = [<Button action="/dodgeResult">Dodge</Button>,<Button action="/counterResult">Counter</Button>];
+
+        } else {
+
+          image = 'https://gateway.pinata.cloud/ipfs/QmV5oZgViyiw6cihQtwP2ZFyD8WJRqFkjL1TgsYxN1gQdp';
+          intents = [<Button action="/dodgeResult">Dodge</Button>,<Button action="/counterResult">Counter</Button>];
+
+        }
 
     } else if (heavyRandomNum === 5) {
-        // attack missed
-        image = 'https://gateway.pinata.cloud/ipfs/QmbZ964voi8yRCcyzaBWgVqxKYNrYUbzLCyoPPSWzaw2J7';
-        intents = [<Button action="/dodgeResult">Dodge</Button>,<Button action="/counterResult">Counter</Button>];
+          // attack missed
+          if (heavyRandomMiss < 1) {
+            image = 'https://gateway.pinata.cloud/ipfs/QmbZ964voi8yRCcyzaBWgVqxKYNrYUbzLCyoPPSWzaw2J7';
+            intents = [<Button action="/dodgeResult">Dodge</Button>,<Button action="/counterResult">Counter</Button>];
+
+          } else {
+
+            image = 'https://gateway.pinata.cloud/ipfs/QmV5oZgViyiw6cihQtwP2ZFyD8WJRqFkjL1TgsYxN1gQdp';
+            intents = [<Button action="/dodgeResult">Dodge</Button>,<Button action="/counterResult">Counter</Button>];
+
+          }
 
 
     } else if (heavyRandomNum === 6) {
@@ -1241,24 +854,44 @@ app.frame('/specialAttack', (c) => {
     player.specials -=1
    
     const specialRandomNum = Math.floor(Math.random() * 8);
-    progressMarker = { ...progressMarker, previousFrame: '/specialAttack' };
+
+    const specialRandomMiss = Math.floor(Math.random() * 2);
+    //progressMarker = { ...progressMarker, previousFrame: '/specialAttack' };
+
 
     if (specialRandomNum < 3) {
         //unsuccessful special attack 
 
-        image = 'https://gateway.pinata.cloud/ipfs/QmV4Mvd7Vx8mHrYsxJkuhYNxohC5x9ZPo2Bib5Dx5AokEQ';
-        intents = [<Button action="/dodgeResult">Dodge</Button>,<Button action="/counterResult">Counter</Button>];
+        if (specialRandomMiss < 1) {
+            image = 'https://gateway.pinata.cloud/ipfs/QmV4Mvd7Vx8mHrYsxJkuhYNxohC5x9ZPo2Bib5Dx5AokEQ';
+            intents = [<Button action="/dodgeResult">Dodge</Button>,<Button action="/counterResult">Counter</Button>];
+
+        } else {
+
+            image = 'https://gateway.pinata.cloud/ipfs/QmVT2zFLdm7WXYqnhZ63UmtadikPYJ9viYS2YqiWxpGk5G';
+            intents = [<Button action="/dodgeResult">Dodge</Button>,<Button action="/counterResult">Counter</Button>];
+
+        }
               
 
     } else {
-        // normal attack
+        // successful special attack
         enemy1.life -= 25
 
         if (enemy1.life > 0) {
           //enemy is still alive
 
-          image = 'https://gateway.pinata.cloud/ipfs/QmWzb6y1NoNRts5H776dshNVkrmFJcYVtvaxAQ7U7A7jsB';
-          intents = [<Button action="/dodgeResult">Dodge</Button>,<Button action="/counterResult">Counter</Button>];
+          if (specialRandomMiss < 1) {
+            image = 'https://gateway.pinata.cloud/ipfs/QmWzb6y1NoNRts5H776dshNVkrmFJcYVtvaxAQ7U7A7jsB';
+            intents = [<Button action="/dodgeResult">Dodge</Button>,<Button action="/counterResult">Counter</Button>];
+
+          } else {
+
+              image = 'https://gateway.pinata.cloud/ipfs/QmdEHVWZsR9XDbuoYnKdU2qkFTPA9iyVHDBFv6r5E237Kq';
+              intents = [<Button action="/dodgeResult">Dodge</Button>,<Button action="/counterResult">Counter</Button>];
+
+          }
+
 
         } else {
           // enemy is dead
@@ -1294,7 +927,7 @@ app.frame('/dodgeResult', (c) => {
     if (dodgeRandomNum < 4) {
         // player dodged
         image = 'https://gateway.pinata.cloud/ipfs/QmWfFCDtRMe6wPv9K7gkDtHSNt9GpAvkw247pxPoeJELvt';
-        intents = [<Button action="/fight">Continue</Button>];
+        intents = [<Button action="/fight2">Continue</Button>];
 
     } else {
         // player is hit
@@ -1303,7 +936,7 @@ app.frame('/dodgeResult', (c) => {
           //player is still alive
 
           image = 'https://gateway.pinata.cloud/ipfs/QmRnjewER2GNLSwyrZcqDrd4AzMSkhRddJBDCeAnZS6mac';
-          intents = [<Button action="/fight">Continue</Button>];
+          intents = [<Button action="/fight2">Continue</Button>];
 
         } else {
           // player is dead
@@ -1338,7 +971,7 @@ app.frame('/counterResult', (c) => {
           //show counter frame
 
           image = 'https://gateway.pinata.cloud/ipfs/QmPKbeqxXhFTWA6YFfSetPYjRzqEtTbSFL7rnqw5qUjnpp';
-          intents = [<Button action="/fight">Continue</Button>];
+          intents = [<Button action="/fight2">Continue</Button>];
 
         } else {
           // enemy is dead
@@ -1355,7 +988,7 @@ app.frame('/counterResult', (c) => {
           //player is still alive
 
           image = 'https://gateway.pinata.cloud/ipfs/QmRnjewER2GNLSwyrZcqDrd4AzMSkhRddJBDCeAnZS6mac';
-          intents = [<Button action="/fight">Continue</Button>];
+          intents = [<Button action="/fight2">Continue</Button>];
 
         } else {
           // player is dead
@@ -1395,26 +1028,6 @@ app.frame('/fleedeath', (c) => {
 
 
 
-
-
-
-/*app.frame('/fight', (c) => {
-
-
-  return c.res({
-
-    
-    image : 'https://gateway.pinata.cloud/ipfs/QmYxN6UJJER3U24RrEUQuKCpyWP4c3uo2ikEN3zCHErBM3',
-  
-    
-    intents: [
-     
-      <Button action="/SwiftAttack">Swift Attack</Button>,<Button action="/HeavyAttack">Power Attack</Button>,<Button action="/HeavyAttack">Special Attack</Button>,
-     
-    ],
-  }) 
-
-});*/
 
 
 
